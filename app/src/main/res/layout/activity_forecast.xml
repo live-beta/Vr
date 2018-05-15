@@ -15,7 +15,6 @@
         android:id="@+id/tv_weather_data"
         android:padding="16dp"
         android:textSize="20sp"
-
         />
 </ScrollView>
 
