@@ -6,11 +6,8 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    // Add a member variable for tv
 
     private TextView forecast;
-
-    private WeatherEntries weatherEntries = new WeatherEntries();
 
 
     @Override
@@ -20,10 +17,6 @@ public class MainActivity extends AppCompatActivity {
 
         forecast = findViewById(R.id.tv_weather_data);
 
-
-       for (String weather: weatherEntries.getWeatherEntries()){
-           forecast.append(weather + "\n\n");
-       }
 
 
 
