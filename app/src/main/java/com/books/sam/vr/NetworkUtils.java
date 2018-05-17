@@ -43,7 +43,7 @@ public class NetworkUtils {
         return null;
     }
 
-    public static URL bbuildUrl(Double lat, Double lon){
+    public static URL buildUrl(Double lat, Double lon){
         return null;
     }
 
