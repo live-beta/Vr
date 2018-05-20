@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.net.URL;
@@ -14,6 +16,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     private TextView forecast;
+    private TextView mErrorMessageDisplay;
+    private ProgressBar mLoadingIndicator;
 
 
     @Override
@@ -22,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_forecast);
 
         forecast = findViewById(R.id.tv_weather_data);
+        mErrorMessageDisplay = findViewById(R.id.tv_error_message_display);
+        mLoadingIndicator = findViewById(R.id.pb_loading_indicator);
 
         loadWeatherData();
 
@@ -32,8 +38,23 @@ public class MainActivity extends AppCompatActivity {
         new FetchWeatherTask().execute(location);
     }
 
+    private void showWeatherDataView() {
+        mErrorMessageDisplay.setVisibility(View.INVISIBLE);
+        forecast.setVisibility(View.VISIBLE);
+    }
+    private void showErrorMessage(){
+        forecast.setVisibility(View.INVISIBLE);
+        mErrorMessageDisplay.setVisibility(View.VISIBLE);
+    }
+
 
     public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mLoadingIndicator.setVisibility(View.VISIBLE);
+        }
+
         @Override
         protected String[] doInBackground(String... params) {
             if (params.length == 0) {
@@ -55,10 +76,16 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String[] weatherData) {
+            mLoadingIndicator.setVisibility(View.INVISIBLE);
+
             if (weatherData != null) {
+                showWeatherDataView();
+
                 for (String weatherString : weatherData) {
                     forecast.append((weatherString) + "\n\n\n");
                 }
+            }else {
+                showErrorMessage();
             }
         }
     }
