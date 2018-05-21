@@ -1,21 +1,25 @@
 package com.books.sam.vr;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.net.URL;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ForecastAdapter.ForecastAdapterOnClickHandler{
 
-
-    private TextView forecast;
+    private RecyclerView mRecyclerView;
+    private ForecastAdapter mForecastAdapter;
     private TextView mErrorMessageDisplay;
     private ProgressBar mLoadingIndicator;
 
@@ -25,8 +29,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forecast);
 
-        forecast = findViewById(R.id.tv_weather_data);
+        mRecyclerView = findViewById(R.id.rv_display_weather_data);
         mErrorMessageDisplay = findViewById(R.id.tv_error_message_display);
+
+        LinearLayoutManager layoutManager =
+                new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+
+        mRecyclerView.setLayoutManager(layoutManager);
+
+        mRecyclerView.setHasFixedSize(true);
+
+        mForecastAdapter = new ForecastAdapter(this);
+
+        mRecyclerView.setAdapter(mForecastAdapter);
+
         mLoadingIndicator = findViewById(R.id.pb_loading_indicator);
 
         loadWeatherData();
@@ -34,17 +50,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadWeatherData() {
+        showWeatherDataView();
         String location = VtPreferences.getPrefferedWeatherLocation(this);
         new FetchWeatherTask().execute(location);
     }
 
+    @Override
+    public void onClick(String weatherForDay){
+        Context context = this;
+        Toast.makeText(context, weatherForDay, Toast.LENGTH_SHORT).show();
+    }
+
     private void showWeatherDataView() {
         mErrorMessageDisplay.setVisibility(View.INVISIBLE);
-        forecast.setVisibility(View.VISIBLE);
+       // forecast.setVisibility(View.VISIBLE);
+        mRecyclerView.setVisibility(View.VISIBLE);
     }
     private void showErrorMessage(){
-        forecast.setVisibility(View.INVISIBLE);
+        //forecast.setVisibility(View.INVISIBLE);
+        mRecyclerView.setVisibility(View.INVISIBLE);
         mErrorMessageDisplay.setVisibility(View.VISIBLE);
+
     }
 
 
@@ -81,9 +107,7 @@ public class MainActivity extends AppCompatActivity {
             if (weatherData != null) {
                 showWeatherDataView();
 
-                for (String weatherString : weatherData) {
-                    forecast.append((weatherString) + "\n\n\n");
-                }
+                mForecastAdapter.setWeatherData(weatherData);
             }else {
                 showErrorMessage();
             }
@@ -103,7 +127,8 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_refresh) {
-            forecast.setText("");
+           // forecast.setText("");
+            mForecastAdapter.setWeatherData(null);
             loadWeatherData();;
             return true;
 
