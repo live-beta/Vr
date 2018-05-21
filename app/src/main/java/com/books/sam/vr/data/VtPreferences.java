@@ -1,4 +1,4 @@
-package com.books.sam.vr;
+package com.books.sam.vr.data;
 
 /**
  * Created by sam on 5/17/18.

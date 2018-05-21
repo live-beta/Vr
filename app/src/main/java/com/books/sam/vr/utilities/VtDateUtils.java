@@ -1,4 +1,4 @@
-package com.books.sam.vr;
+package com.books.sam.vr.utilities;
 
 import android.content.Context;
 import android.text.format.DateUtils;

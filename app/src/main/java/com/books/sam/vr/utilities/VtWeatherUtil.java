@@ -1,7 +1,10 @@
-package com.books.sam.vr;
+package com.books.sam.vr.utilities;
 
 import android.content.Context;
 import android.util.Log;
+
+import com.books.sam.vr.R;
+import com.books.sam.vr.data.VtPreferences;
 
 /**
  * Created by sam on 5/17/18.
