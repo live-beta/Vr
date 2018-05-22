@@ -1,8 +1,6 @@
-package com.books.sam.vr;
+package com.books.sam.vr.utilities;
 
-import android.content.Intent;
 import android.net.Uri;
-import android.text.InputType;
 import android.util.Log;
 
 import java.io.IOException;

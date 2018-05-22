@@ -14,6 +14,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.books.sam.vr.data.VtPreferences;
+import com.books.sam.vr.utilities.NetworkUtils;
+import com.books.sam.vr.utilities.OpenWeatherJsonUtils;
+
 import java.net.URL;
 
 public class MainActivity extends AppCompatActivity implements ForecastAdapter.ForecastAdapterOnClickHandler{
@@ -63,11 +67,9 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
 
     private void showWeatherDataView() {
         mErrorMessageDisplay.setVisibility(View.INVISIBLE);
-       // forecast.setVisibility(View.VISIBLE);
         mRecyclerView.setVisibility(View.VISIBLE);
     }
     private void showErrorMessage(){
-        //forecast.setVisibility(View.INVISIBLE);
         mRecyclerView.setVisibility(View.INVISIBLE);
         mErrorMessageDisplay.setVisibility(View.VISIBLE);
 

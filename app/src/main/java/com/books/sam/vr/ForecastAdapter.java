@@ -2,6 +2,7 @@ package com.books.sam.vr;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,7 +62,7 @@ public class ForecastAdapterViewHolder extends RecyclerView.ViewHolder
 @Override
     public void onBindViewHolder(ForecastAdapterViewHolder forecastAdapterViewHolder, int position){
 
-        // Using the data position to bind new data items to the respective views
+        // Binding the view with data
         String weatherForThisDay = mweatherData[position];
         forecastAdapterViewHolder.mwWeatherTextView.setText(weatherForThisDay);
 }

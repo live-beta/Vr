@@ -1,7 +1,10 @@
-package com.books.sam.vr;
+package com.books.sam.vr.utilities;
 
 import android.content.ContentValues;
 import android.content.Context;
+
+import com.books.sam.vr.utilities.VtDateUtils;
+import com.books.sam.vr.utilities.VtWeatherUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
