@@ -15,5 +15,6 @@ public class ViewData extends AppCompatActivity {
         setContentView(R.layout.weather_view);
 
 
+
     }
 }
