@@ -1,7 +1,13 @@
 package com.books.sam.vr;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.content.Loader;
+import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -23,7 +29,8 @@ import com.books.sam.vr.utilities.OpenWeatherJsonUtils;
 
 import java.net.URL;
 
-public class MainActivity extends AppCompatActivity implements ForecastAdapter.ForecastAdapterOnClickHandler{
+public class MainActivity extends AppCompatActivity implements
+        ForecastAdapter.ForecastAdapterOnClickHandler, LoaderManager<String[]>{
 
 
     private static final String TAG= MainActivity.class.getSimpleName();
@@ -84,6 +91,29 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
         mRecyclerView.setVisibility(View.INVISIBLE);
         mErrorMessageDisplay.setVisibility(View.VISIBLE);
 
+    }
+
+    @NonNull
+    @Override
+    public <D> Loader<D> initLoader(int id, @Nullable Bundle args, @NonNull LoaderCallbacks<D> callback) {
+        return null;
+    }
+
+    @NonNull
+    @Override
+    public <D> Loader<D> restartLoader(int id, @Nullable Bundle args, @NonNull LoaderCallbacks<D> callback) {
+        return null;
+    }
+
+    @Override
+    public void destroyLoader(int id) {
+
+    }
+
+    @Nullable
+    @Override
+    public <D> Loader<D> getLoader(int id) {
+        return null;
     }
 
 
