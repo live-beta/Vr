@@ -1,11 +1,20 @@
 package com.books.sam.vr;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.LoaderManager;
 import android.content.Context;
+import android.content.Intent;
+import android.support.v4.content.Loader;
+import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,8 +29,11 @@ import com.books.sam.vr.utilities.OpenWeatherJsonUtils;
 
 import java.net.URL;
 
-public class MainActivity extends AppCompatActivity implements ForecastAdapter.ForecastAdapterOnClickHandler{
+public class MainActivity extends AppCompatActivity implements
+        ForecastAdapter.ForecastAdapterOnClickHandler, LoaderManager<String[]>{
 
+
+    private static final String TAG= MainActivity.class.getSimpleName();
     private RecyclerView mRecyclerView;
     private ForecastAdapter mForecastAdapter;
     private TextView mErrorMessageDisplay;
@@ -62,7 +74,13 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
     @Override
     public void onClick(String weatherForDay){
         Context context = this;
-        Toast.makeText(context, weatherForDay, Toast.LENGTH_SHORT).show();
+       // Toast.makeText(context, weatherForDay, Toast.LENGTH_SHORT).show();
+        Class viewDataClass = ViewData.class;
+        Intent intentViewData = new Intent(context,viewDataClass);
+
+       intentViewData.putExtra(Intent.EXTRA_TEXT, weatherForDay);
+        startActivity(intentViewData);
+
     }
 
     private void showWeatherDataView() {
@@ -73,6 +91,29 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
         mRecyclerView.setVisibility(View.INVISIBLE);
         mErrorMessageDisplay.setVisibility(View.VISIBLE);
 
+    }
+
+    @NonNull
+    @Override
+    public <D> Loader<D> initLoader(int id, @Nullable Bundle args, @NonNull LoaderCallbacks<D> callback) {
+        return null;
+    }
+
+    @NonNull
+    @Override
+    public <D> Loader<D> restartLoader(int id, @Nullable Bundle args, @NonNull LoaderCallbacks<D> callback) {
+        return null;
+    }
+
+    @Override
+    public void destroyLoader(int id) {
+
+    }
+
+    @Nullable
+    @Override
+    public <D> Loader<D> getLoader(int id) {
+        return null;
     }
 
 
@@ -115,6 +156,20 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
             }
         }
     }
+    private void openLocationInMap() {
+        String addressString = "1600 Ampitheatre Parkway CA";
+
+        Uri geoLocation = Uri.parse("geo:0,0?="+ addressString);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(geoLocation);
+
+        if (intent.resolveActivity(getPackageManager()) != null){
+            startActivity(intent);
+        }else {
+            Log.d(TAG, "Couldn't call" + geoLocation.toString()+", " +
+                    "no receiving apps Installed");
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -134,6 +189,10 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
             loadWeatherData();;
             return true;
 
+        }
+        if (id == R.id.action_map){
+            openLocationInMap();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

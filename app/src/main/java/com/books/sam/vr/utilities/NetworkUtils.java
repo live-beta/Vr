@@ -42,6 +42,13 @@ public final class NetworkUtils {
 
     public static URL buildUrl(String locationQuery){
 
+/*
+* dasjkflja;sfas
+*
+* asdfkadfjajdsjfa;kjdkljfalksjoijweiopajlsdjafjsdka
+* sdkfakdk;fjkdsjfadjsofpjaeifakdjapjawklfjekjfa
+* jafidjiaojpdfajlkdjalk;fjdoapfjaeijiopjafioajfoepajfdkjfakdpfjadjfklasjd;jfaif
+* */
         Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon()
                 .appendQueryParameter(QUERY_PARAM, locationQuery)
                 .appendQueryParameter(FORMAT_PARAM, format)
